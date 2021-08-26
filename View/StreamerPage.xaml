@@ -1,0 +1,75 @@
+﻿<Page x:Class="twitch_notify_v2.View.StreamerPage"
+      xmlns:vm="clr-namespace:twitch_notify_v2.ViewModel"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:twitch_notify_v2.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="StreamerPage">
+
+    <Page.DataContext>
+        <vm:StreamerPageVM/>
+    </Page.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*" />
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="4*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock VerticalAlignment="Center" Foreground="White" FontSize="18px" Text="STREAMER" />
+        <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="18px" Text="POPUP ALERT" />
+        <TextBlock Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="18px" Text="NOTIFY GAME CHANGE" />
+
+        <Button Grid.Row="1" Height="70px" VerticalAlignment="Top" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+            <StackPanel Orientation="Horizontal">
+                <Image Margin="0px 0px 15px 0px" Width="70px" Height="70px" Source="https://cdn.betterttv.net/emote/5cd6b08cf1dac14a18c4b61f/3x"/>
+                <TextBlock Text="Add streamer" Foreground="White" FontSize="22" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Button>
+
+        <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="Transparent" BorderBrush="Transparent" Foreground="Transparent" Grid.Row="2" Grid.ColumnSpan="4" ItemsSource="{Binding Streamers}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Background="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="75px" />
+                            <ColumnDefinition Width="5*" />
+                            <ColumnDefinition Width="3*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+
+                        <Image Margin="0px 5px 0px 0px" HorizontalAlignment="Left" Grid.Column="0" VerticalAlignment="Center" Width="70px" Height="70px" Source="{Binding AvatarUrl}"/>
+
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock Foreground="White" TextTrimming="CharacterEllipsis" Text="{Binding Name}"/>
+                            <TextBlock Foreground="White" Text="W.I.P."/>
+                        </StackPanel>
+                    </Grid>
+
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="VerticalAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            </ListView>
+    </Grid>
+</Page>
