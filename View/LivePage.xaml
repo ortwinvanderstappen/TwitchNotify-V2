@@ -41,7 +41,7 @@
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
 
-                        <Image Margin="0px 5px 0px 0px" HorizontalAlignment="Left" Grid.Column="0" Grid.RowSpan="3" VerticalAlignment="Center" Width="70px" Height="70px" Source="{Binding AvatarUrl}"/>
+                        <Image Margin="0px 5px 0px 0px" HorizontalAlignment="Left" Grid.Column="0" Grid.RowSpan="3" VerticalAlignment="Center" Width="70px" Height="70px" Source="{Binding AvatarUrl, FallbackValue=https://cdn.betterttv.net/emote/58493695987aab42df852e0f/3x}"/>
 
                         <TextBlock Grid.Column="1" Foreground="White" TextTrimming="CharacterEllipsis" >
                             <TextBlock.Text>

@@ -30,7 +30,7 @@
         <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="18px" Text="POPUP ALERT" />
         <TextBlock Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="18px" Text="NOTIFY GAME CHANGE" />
 
-        <Button Grid.Row="1" Height="70px" VerticalAlignment="Top" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+        <Button Command="{Binding AddStreamerCommand}" Grid.Row="1" Height="70px" VerticalAlignment="Top" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
             <StackPanel Orientation="Horizontal">
                 <Image Margin="0px 0px 15px 0px" Width="70px" Height="70px" Source="https://cdn.betterttv.net/emote/5cd6b08cf1dac14a18c4b61f/3x"/>
                 <TextBlock Text="Add streamer" Foreground="White" FontSize="22" VerticalAlignment="Center"/>
@@ -71,5 +71,28 @@
             </ListView.ItemContainerStyle>
 
             </ListView>
+
+        <Popup  IsOpen="{Binding ShowAddStreamerPopup}" Width="400px" Height="200px" Placement="RelativePoint" PopupAnimation="Fade" >
+            <Grid Background="#141414" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.ColumnSpan="3" Grid.RowSpan="4" BorderBrush="White" BorderThickness="1px"></Border>
+
+                <TextBlock TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="18" Grid.Row="0" Grid.Column="1" Text="Name your streamer"></TextBlock>
+                <TextBox FontSize="18" HorizontalContentAlignment="Center" Grid.Row="1" Grid.Column="1" Margin="15px" Background="#32495f" Foreground="#21d1b4" Text="{Binding AddStreamerName}"></TextBox>
+                <Button Command="{Binding VerifyStreamerCommand}" Background="#32495f" Foreground="#21d1b4" Grid.Row="2" Grid.Column="1" Width="80px" Height="30px" Content="Verify"></Button>
+                <Button Command="{Binding CloseAddStreamerPopupCommand}" Background="#4b0a0a" Grid.Column="2" Width="35px" Height="25px" HorizontalAlignment="Right" VerticalAlignment="Top" Content="X"></Button>
+            </Grid>
+        </Popup>
     </Grid>
 </Page>

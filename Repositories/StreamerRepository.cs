@@ -111,5 +111,13 @@ namespace twitch_notify_v2.Repositories
                 }
             }
         }
+
+        public void AddStreamer(Streamer streamer)
+        {
+            if(Streamers == null) Streamers = new List<Streamer>();
+
+            Streamers.Add(streamer);
+            SaveStreamers();
+        }
     }
 }
