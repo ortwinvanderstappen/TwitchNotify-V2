@@ -82,6 +82,7 @@ namespace twitch_notify_v2.Repositories
                     {
                         JsonSerializer serializer = new JsonSerializer();
                         Streamers = (List<Streamer>)serializer.Deserialize(file, typeof(List<Streamer>));
+                        file.Close();
                     }
                 }
                 else
@@ -108,16 +109,26 @@ namespace twitch_notify_v2.Repositories
                 {
                     JsonSerializer serializer = new JsonSerializer();
                     serializer.Serialize(file, Streamers);
+                    file.Close();
+                    file.Dispose();
                 }
             }
         }
 
         public void AddStreamer(Streamer streamer)
         {
-            if(Streamers == null) Streamers = new List<Streamer>();
-
+            if (Streamers == null) Streamers = new List<Streamer>();
             Streamers.Add(streamer);
             SaveStreamers();
+        }
+
+        public void RemoveStreamer(Streamer streamer)
+        {
+            if (Streamers != null)
+            {
+                Streamers.Remove(streamer);
+                SaveStreamers();
+            }
         }
     }
 }

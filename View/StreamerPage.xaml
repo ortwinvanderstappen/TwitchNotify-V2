@@ -20,24 +20,25 @@
             <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*" />
-            <ColumnDefinition Width="3*" />
-            <ColumnDefinition Width="4*" />
-            <ColumnDefinition Width="2*" />
+          <ColumnDefinition Width="75px" />
+          <ColumnDefinition Width="5*" />
+          <ColumnDefinition Width="3*" />
+          <ColumnDefinition Width="4*" />
+          <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock VerticalAlignment="Center" Foreground="White" FontSize="18px" Text="STREAMER" />
-        <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="18px" Text="POPUP ALERT" />
-        <TextBlock Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="18px" Text="NOTIFY GAME CHANGE" />
+        <TextBlock Grid.ColumnSpan="2" VerticalAlignment="Center" Foreground="White" FontSize="18px" Text="STREAMER" />
+        <TextBlock Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="18px" Text="POPUP ALERT" />
+        <TextBlock Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="18px" Text="NOTIFY GAME CHANGE" />
 
-        <Button Command="{Binding AddStreamerCommand}" Grid.Row="1" Height="70px" VerticalAlignment="Top" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+        <Button Grid.ColumnSpan="2" Command="{Binding AddStreamerCommand}" Grid.Row="1" Height="70px" VerticalAlignment="Top" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
             <StackPanel Orientation="Horizontal">
                 <Image Margin="0px 0px 15px 0px" Width="70px" Height="70px" Source="https://cdn.betterttv.net/emote/5cd6b08cf1dac14a18c4b61f/3x"/>
                 <TextBlock Text="Add streamer" Foreground="White" FontSize="22" VerticalAlignment="Center"/>
             </StackPanel>
         </Button>
 
-        <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="Transparent" BorderBrush="Transparent" Foreground="Transparent" Grid.Row="2" Grid.ColumnSpan="4" ItemsSource="{Binding Streamers}">
+        <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="Transparent" BorderBrush="Transparent" Foreground="Transparent" Grid.Row="2" Grid.ColumnSpan="5" ItemsSource="{Binding Streamers}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Background="Transparent">
@@ -45,6 +46,8 @@
                             <ColumnDefinition Width="75px" />
                             <ColumnDefinition Width="5*" />
                             <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="4*" />
+                            <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*"/>
@@ -58,8 +61,19 @@
                             <TextBlock Foreground="White" TextTrimming="CharacterEllipsis" Text="{Binding Name}"/>
                             <TextBlock Foreground="White" Text="W.I.P."/>
                         </StackPanel>
-                    </Grid>
 
+                        <Button Command="{Binding PopupAlertCommand}" Grid.Column="2" Width="52px" Height="22px" Padding="-1px" ClickMode="Press">
+                            <Image Source="{Binding PopupStyle}" Width="52px"></Image>
+                        </Button>
+
+                        <Button Command="{Binding ButtonGameChangeCommand}" Grid.Column="3" Width="52px" Height="22px" Padding="-1px" ClickMode="Press">
+                            <Image Source="{Binding ButtonGameChangeStyle}" Width="52px"></Image>
+                        </Button>
+
+                        <Button Command="{Binding RemoveStreamerCommand}" Grid.Column="4" Width="35px" Height="21px" Padding="-1px" ClickMode="Press">
+                          <Image Source="Cross.png" Width="36px"></Image>
+                        </Button>
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
             <ListView.ItemContainerStyle>
@@ -69,9 +83,9 @@
                     <Setter Property="VerticalAlignment" Value="Stretch" />
                 </Style>
             </ListView.ItemContainerStyle>
-
             </ListView>
 
+        <!--ADD STREAMER POPUP-->
         <Popup  IsOpen="{Binding ShowAddStreamerPopup}" Width="400px" Height="200px" Placement="RelativePoint" PopupAnimation="Fade" >
             <Grid Background="#141414" >
                 <Grid.ColumnDefinitions>

@@ -42,6 +42,8 @@ namespace twitch_notify_v2.Models
                 // Start the service
                 if (!_isStarted)
                     _monitor.Start();
+
+                Task.Run(() => _monitor.UpdateLiveStreamersAsync());
             }
         }
 
@@ -76,7 +78,7 @@ namespace twitch_notify_v2.Models
             }
 
             StreamerRepository.Instance.SaveStreamers();
-            _livePageVM.RefreshLiveStreamers();
+            _livePageVM.RefreshStreamers();
         }
 
         private async void OnStreamOfflineAsync(object sender, OnStreamOfflineArgs args)
@@ -90,7 +92,7 @@ namespace twitch_notify_v2.Models
                 Console.WriteLine("Streamer " + args.Channel + " is now offline: " + streamer.OnlineStatus);
             }
 
-            _livePageVM.RefreshLiveStreamers();
+            _livePageVM.RefreshStreamers();
         }
 
         private void OnServiceStarted(object sender, OnServiceStartedArgs e)

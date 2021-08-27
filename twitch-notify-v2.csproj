@@ -157,6 +157,7 @@
     <Compile Include="Models\Credential.cs" />
     <Compile Include="Models\LiveMonitor.cs" />
     <Compile Include="Models\Streamer.cs" />
+    <Compile Include="Models\StreamerManager.cs" />
     <Compile Include="Repositories\StreamerRepository.cs" />
     <Compile Include="ViewModel\LivePageVM.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -223,7 +224,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\" />
+    <Resource Include="Resources\Icons\Checkcross.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\Checkmark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\Checkcross.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\Cross.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\Cross.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

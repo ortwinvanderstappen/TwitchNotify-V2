@@ -27,10 +27,10 @@ namespace twitch_notify_v2.ViewModel
 
         public StreamerPageVM()
         {
-            LoadStreamers();
+            RefreshStreamers();
         }
 
-        private void LoadStreamers()
+        public void RefreshStreamers()
         {
             List<Streamer> streamers = StreamerRepository.Instance.Streamers;
             if (streamers != null)
@@ -45,9 +45,9 @@ namespace twitch_notify_v2.ViewModel
         }
 
         private RelayCommand _addStreamerCommand;
-        public RelayCommand AddStreamerCommand { get { if (_addStreamerCommand == null) _addStreamerCommand = new RelayCommand(AddStreamer); return _addStreamerCommand; } }
+        public RelayCommand AddStreamerCommand { get { if (_addStreamerCommand == null) _addStreamerCommand = new RelayCommand(ShowAddStreamerPopupWindow); return _addStreamerCommand; } }
 
-        private void AddStreamer()
+        private void ShowAddStreamerPopupWindow()
         {
             ShowAddStreamerPopup = true;
             RaisePropertyChanged("ShowAddStreamerPopup");
@@ -69,7 +69,6 @@ namespace twitch_notify_v2.ViewModel
         public RelayCommand CloseAddStreamerPopupCommand { get { if (_closeAddStreamerPopupCommand == null) _closeAddStreamerPopupCommand = new RelayCommand(CloseAddStreamerPopup); return _closeAddStreamerPopupCommand; } }
 
         public string AddStreamerName { get; set; }
-
         private async void VerifyStreamer()
         {
             try
@@ -83,9 +82,9 @@ namespace twitch_notify_v2.ViewModel
                     Streamer streamer = new Streamer();
                     streamer.AvatarUrl = user.Matches[0].Logo;
                     streamer.Name = user.Matches[0].DisplayName;
-                    StreamerRepository.Instance.AddStreamer(streamer);
+                    StreamerManager.Instance.AddStreamer(streamer);
 
-                    LoadStreamers();
+                    RefreshStreamers();
                 }
                 else
                 {

@@ -17,8 +17,15 @@ namespace twitch_notify_v2.ViewModel
     class MainViewModel : ViewModelBase
     {
 
+        private Page LivePage = new LivePage();
+        private Page StreamerPage = new StreamerPage();
+        private Page ConfigPage = new ConfigPage();
+
         public MainViewModel()
         {
+            StreamerManager.Instance.LivePage = LivePage;
+            StreamerManager.Instance.StreamerPage = StreamerPage;
+            StreamerManager.Instance.ConfigPage = ConfigPage;
         }
 
         private RelayCommand<string> _navigationCommand;
@@ -59,9 +66,5 @@ namespace twitch_notify_v2.ViewModel
             get { return _currentPage; }
             set { _currentPage = value; }
         }
-
-        private Page LivePage = new LivePage();
-        private Page StreamerPage = new StreamerPage();
-        private Page ConfigPage = new ConfigPage();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,11 @@ using twitch_notify_v2.Repositories;
 
 namespace twitch_notify_v2.ViewModel
 {
-    class LivePageVM: ViewModelBase
+    class LivePageVM : ViewModelBase
     {
         private LiveMonitor _liveMonitor;
+        public LiveMonitor LiveMonitor { get { return _liveMonitor; } private set { _liveMonitor = value; } }
+
         private List<Streamer> _liveStreamers;
         public List<Streamer> LiveStreamers { get { return _liveStreamers; } }
 
@@ -30,7 +33,7 @@ namespace twitch_notify_v2.ViewModel
             _liveMonitor.StartMonitor();
         }
 
-        public void RefreshLiveStreamers()
+        public void RefreshStreamers()
         {
             Console.WriteLine("Refreshing live streamers");
             _liveStreamers = StreamerRepository.Instance.GetLiveStreamers();

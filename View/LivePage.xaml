@@ -13,6 +13,16 @@
         <vm:LivePageVM/>
     </Page.DataContext>
 
+    <Page.Resources>
+        <Style TargetType="Button">
+          <Setter Property="Width" Value="52px"></Setter>
+          <Setter Property="Height" Value="22px"></Setter>
+          <Setter Property="Background" Value="Transparent"/>
+          <Setter Property="BorderBrush" Value="Transparent"/>
+          <Setter Property="Padding" Value="-1px"/>
+      </Style>
+    </Page.Resources>
+
     <Grid Background="#141414">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
@@ -54,7 +64,9 @@
                         <TextBlock Grid.Column="1" Grid.Row="1" Foreground="White" Text="{Binding Game}"></TextBlock>
                         <TextBlock Grid.Column="1" Grid.Row="2" Foreground="White" Text="{Binding StartedAt}"></TextBlock>
 
-                        <TextBlock Grid.Column="2" Grid.RowSpan="3" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Text="W.I.P."/>
+                        <Button Command="{Binding ButtonGameChangeCommand}" Grid.Column="2" Grid.RowSpan="3" ClickMode="Press">
+                          <Image Source="{Binding ButtonGameChangeStyle}" Grid.Column="2" Grid.RowSpan="3" Width="52px"></Image>
+                        </Button>
                     </Grid>
 
                 </DataTemplate>
