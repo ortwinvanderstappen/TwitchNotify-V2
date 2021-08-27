@@ -25,22 +25,34 @@ namespace twitch_notify_v2.Models
 
         public void AddStreamer(Streamer streamer)
         {
+            //Add streamer to repository
             StreamerRepository.Instance.AddStreamer(streamer);
+
             //Update live monitor to incorporate new streamer
-            LivePageVM lpVM = (LivePageVM)LivePage.DataContext;
-            lpVM.LiveMonitor.RefreshStreamerList();
-            //Refresh streamer list 
+            LiveMonitor.Instance.RefreshStreamerList();
+
+            //Refresh offline and online streamer list 
             StreamerPageVM spVM = (StreamerPageVM)StreamerPage.DataContext;
             spVM.RefreshStreamers();
+
+            //Refresh the live page
+            LivePageVM lpVM = (LivePageVM)LivePage.DataContext;
+            lpVM.RefreshStreamers();
         }
 
         public void RemoveStreamer(Streamer streamer)
         {
+            //Remove streamer from repository
             StreamerRepository.Instance.RemoveStreamer(streamer);
+
+            //Refresh the live page
             LivePageVM lpVM = (LivePageVM)LivePage.DataContext;
-            lpVM.LiveMonitor.RefreshStreamerList();
             lpVM.RefreshStreamers();
-            //Refresh streamer list 
+
+            //Remove streamer from potential live pool
+            LiveMonitor.Instance.RefreshStreamerList();
+
+            //Refresh offline and online streamer list 
             StreamerPageVM spVM = (StreamerPageVM)StreamerPage.DataContext;
             spVM.RefreshStreamers();
         }

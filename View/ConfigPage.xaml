@@ -1,4 +1,5 @@
 ﻿<Page x:Class="twitch_notify_v2.View.ConfigPage"
+      xmlns:vm="clr-namespace:twitch_notify_v2.ViewModel"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,7 +9,75 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ConfigPage">
 
+    <Page.DataContext>
+        <vm:ConfigPageVM/>
+    </Page.DataContext>
+
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <!--Row 1-->
+        <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="Client ID" FontSize="22" Foreground="White" Padding="15px 0px 15px 7.5px"></TextBlock>
+            <TextBlock Text="Access Token" FontSize="22" Foreground="White" Padding="15px 7.5px 15px 0px"></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center">
+            <TextBox BorderBrush="{Binding ClientIdBorderBrush}" VerticalAlignment="Center" Text="{Binding ClientId}" FontSize="22" Foreground="White" Background="#7a7a7a" Margin="0px 0px 0px 7.5px"></TextBox>
+            <TextBox BorderBrush="{Binding AccessTokenBorderBrush}" VerticalAlignment="Center" Text="{Binding AccessToken}" FontSize="22" Foreground="White" Background="#7a7a7a" Margin="0px 7.5px 0px 0px"></TextBox>
+        </StackPanel>
+        <Button Command="{Binding VerifyCommand}" Grid.Column="3" Width="101px" Height="77px" Background="Transparent" Padding="-1px" VerticalAlignment="Center">
+            <Image Source="CheckmarkRaw.png"></Image>
+        </Button>
+        <Button Command="{Binding HelpCommand}" HorizontalAlignment="Left" Grid.Column="4" Width="101px" Height="77px" Background="Transparent" Padding="-1px" VerticalAlignment="Center">
+            <Image Source="QuestionMark.png"></Image>
+        </Button>
+
+        <!--Row 2-->
+        <StackPanel VerticalAlignment="Center" Grid.Row="1" Grid.ColumnSpan="2">
+            <TextBlock Text="Start with windows" FontSize="22" Foreground="White" Padding="15px 0px 15px 7.5px"></TextBlock>
+            <TextBlock Text="Minimize to tray" FontSize="22" Foreground="White" Padding="15px 7.5px 15px 0px"></TextBlock>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left">
+            <Button Command="{Binding StartWithWindowsCheckboxCommand}" BorderBrush="Transparent" Background="Transparent" Padding="-1px" Width="52px" Height="22px" Margin="15px 0px 15px 7.5px" ClickMode="Press">
+                <Image Source="{Binding StartWithWindowsCheckboxPath}" Width="52px"></Image>
+            </Button>
+            <Button Command="{Binding MinimizeToTrayCheckboxCommand}"  BorderBrush="Transparent" Background="Transparent" Padding="-1px" Width="52px" Height="22px" Margin="15px 7.5px 15px 0px" ClickMode="Press">
+                <Image Source="{Binding MinimizeToTrayCheckboxPath}" Width="52px"></Image>
+            </Button>
+        </StackPanel>
+
+        <!--Row 3-->
+        <StackPanel VerticalAlignment="Center" Grid.Row="2" Grid.ColumnSpan="2">
+            <TextBlock Text="Click alert to open twitch" FontSize="22" Foreground="White" Padding="15px 0px 15px 7.5px"></TextBlock>
+            <TextBlock Text="Alert duration" FontSize="22" Foreground="White" Padding="15px 7.5px 15px 0px"></TextBlock>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Left">
+            <Button Command="{Binding ClickAlertToOpenTwitchCheckboxCommand}" HorizontalAlignment="Left" BorderBrush="Transparent" Background="Transparent" Padding="-1px"  Width="52px" Height="22px" Margin="15px 0px 15px 7.5px" ClickMode="Press">
+                <Image Source="{Binding ClickAlertToOpenTwitchCheckboxPath}" Width="52px"></Image>
+            </Button>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <Button Command="{Binding AlertDurationCommand}" CommandParameter="1" Foreground="White" Background="{Binding Alert1BackgroundColor}" FontSize="11" VerticalContentAlignment="Center" Content="10" Width="52px" Height="22px" Margin="15px 7.5px 5px 0px" ClickMode="Press"/>
+                <Button Command="{Binding AlertDurationCommand}" CommandParameter="2" Foreground="White" Background="{Binding Alert2BackgroundColor}" FontSize="11" VerticalContentAlignment="Center" Content="30" Width="52px" Height="22px" Margin="5px 7.5px 5px 0px" ClickMode="Press"/>
+                <Button Command="{Binding AlertDurationCommand}" CommandParameter="3" Foreground="White" Background="{Binding Alert3BackgroundColor}" FontSize="11" VerticalContentAlignment="Center" Content="60" Width="52px" Height="22px" Margin="5px 7.5px 5px 0px" ClickMode="Press"/>
+                <Button Command="{Binding AlertDurationCommand}" CommandParameter="4" Foreground="White" Background="{Binding Alert4BackgroundColor}" FontSize="11" VerticalContentAlignment="Center" Content="∞" Width="52px" Height="22px" Margin="5px 7.5px 5px 0px" ClickMode="Press"/>
+            </StackPanel>
+        </StackPanel>
+
+        <Image Source="GithubIcon.png" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Width="175px" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.RowSpan="2" Margin="15px"></Image>
     </Grid>
 </Page>

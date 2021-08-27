@@ -74,6 +74,7 @@ namespace twitch_notify_v2.ViewModel
             try
             {
                 var user = await TwitchAPIConfig.Instance.TwitchAPI.V5.Users.GetUserByNameAsync(AddStreamerName);
+                bool isOnline = await TwitchAPIConfig.Instance.TwitchAPI.V5.Streams.BroadcasterOnlineAsync(user.Matches[0].Id);
 
                 if (user.Matches.Length >= 1)
                 {
@@ -82,6 +83,16 @@ namespace twitch_notify_v2.ViewModel
                     Streamer streamer = new Streamer();
                     streamer.AvatarUrl = user.Matches[0].Logo;
                     streamer.Name = user.Matches[0].DisplayName;
+                    streamer.OnlineStatus = isOnline;
+
+                    if (isOnline)
+                    {
+                        var stream = await TwitchAPIConfig.Instance.TwitchAPI.V5.Streams.GetStreamByUserAsync(user.Matches[0].Id);
+                        streamer.Title = stream.Stream.Channel.Status;
+                        streamer.StartedAt = stream.Stream.CreatedAt;
+                        streamer.Game = stream.Stream.Game;
+                    }
+
                     StreamerManager.Instance.AddStreamer(streamer);
 
                     RefreshStreamers();
@@ -93,7 +104,7 @@ namespace twitch_notify_v2.ViewModel
                 }
 
             }
-            catch (BadParameterException e)
+            catch (BadParameterException)
             {
                 AddStreamerName = "";
                 RaisePropertyChanged("AddStreamerName");

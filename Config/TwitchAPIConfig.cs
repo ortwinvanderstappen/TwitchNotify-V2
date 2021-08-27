@@ -14,20 +14,6 @@ namespace twitch_notify_v2.Config
     {
         private static TwitchAPIConfig _instance = null;
         private static readonly object padlock = new object();
-
-        private TwitchAPI _twitchAPI;
-        public TwitchAPI TwitchAPI
-        {
-            get { return _twitchAPI; }
-            private set { _twitchAPI = value; }
-        }
-
-        public TwitchAPIConfig()
-        {
-            _twitchAPI = new TwitchAPI();
-            SetupCredentials();
-        }
-
         public static TwitchAPIConfig Instance
         {
             get
@@ -43,31 +29,56 @@ namespace twitch_notify_v2.Config
             }
         }
 
-        private void SetupCredentials()
+        public TwitchAPIConfig()
         {
-            // Determine resource paths
-            string folder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            string specificFolder = Path.Combine(folder, "TwitchNotifier");
-            string resourceName = "credentials.json";
-            string resourceLocation = Path.Combine(specificFolder, resourceName);
+            _twitchAPI = new TwitchAPI();
+            //LoadCredentials();
+        }
 
-            if (File.Exists(resourceLocation))
-            {
-                using (StreamReader file = File.OpenText(resourceLocation))
-                {
-                    JsonSerializer serializer = new JsonSerializer();
+        private TwitchAPI _twitchAPI;
+        public TwitchAPI TwitchAPI
+        {
+            get { return _twitchAPI; }
+            private set { _twitchAPI = value; }
+        }
 
-                    Credential credential = (Credential)serializer.Deserialize(file, typeof(Credential));
-                    TwitchAPI.Settings.ClientId = credential.ClientId;
-                    TwitchAPI.Settings.AccessToken = credential.AccessToken;
+        //public void LoadCredentials()
+        //{
+        //    // Determine resource paths
+        //    string folder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        //    string specificFolder = Path.Combine(folder, "TwitchNotifier");
+        //    string resourceName = "config.json";
+        //    string resourceLocation = Path.Combine(specificFolder, resourceName);
 
-                    Console.WriteLine ( "clientid: " + credential.ClientId);
-                }
-            }
-            else
-            {
-                Console.WriteLine("Error: File at location: " + resourceLocation + " does not exist!");
-            }
+        //    if (File.Exists(resourceLocation))
+        //    {
+        //        using (StreamReader file = File.OpenText(resourceLocation))
+        //        {
+        //            JsonSerializer serializer = new JsonSerializer();
+
+        //            Models.Config credential = (Models.Config)serializer.Deserialize(file, typeof(Models.Config));
+
+        //            Models.Config.Instance.ClientId = credential.ClientId;
+        //            Models.Config.Instance.AccessToken = credential.AccessToken;
+        //            Models.Config.Instance.StartWithWindows = credential.StartWithWindows;
+        //            Models.Config.Instance.MinimizeToTray = credential.MinimizeToTray;
+        //            Models.Config.Instance.ClickAlertToShowTwitch = credential.ClickAlertToShowTwitch;
+        //            Models.Config.Instance.AlertDuration = credential.AlertDuration;
+
+        //            TwitchAPI.Settings.ClientId = credential.ClientId;
+        //            TwitchAPI.Settings.AccessToken = credential.AccessToken;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("Error: File at location: " + resourceLocation + " does not exist!");
+        //    }
+        //}
+
+        public async Task<bool> VerifyCredentials()
+        {
+            var credentialResult = await Config.TwitchAPIConfig.Instance.TwitchAPI.V5.Auth.CheckCredentialsAsync();
+            return credentialResult.Result;
         }
     }
 }

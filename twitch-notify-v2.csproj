@@ -154,11 +154,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Config\TwitchAPIConfig.cs" />
-    <Compile Include="Models\Credential.cs" />
+    <Compile Include="Models\Config.cs" />
     <Compile Include="Models\LiveMonitor.cs" />
     <Compile Include="Models\Streamer.cs" />
     <Compile Include="Models\StreamerManager.cs" />
     <Compile Include="Repositories\StreamerRepository.cs" />
+    <Compile Include="ViewModel\ConfigPageVM.cs" />
     <Compile Include="ViewModel\LivePageVM.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\StreamerPageVM.cs" />
@@ -237,6 +238,24 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="View\Cross.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\GithubIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\GithubIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\CheckmarkRaw.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\CheckmarkRaw.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\QuestionMark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\QuestionMark.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

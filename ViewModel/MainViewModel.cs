@@ -16,7 +16,6 @@ namespace twitch_notify_v2.ViewModel
 {
     class MainViewModel : ViewModelBase
     {
-
         private Page LivePage = new LivePage();
         private Page StreamerPage = new StreamerPage();
         private Page ConfigPage = new ConfigPage();
@@ -26,6 +25,14 @@ namespace twitch_notify_v2.ViewModel
             StreamerManager.Instance.LivePage = LivePage;
             StreamerManager.Instance.StreamerPage = StreamerPage;
             StreamerManager.Instance.ConfigPage = ConfigPage;
+
+            LiveMonitor.Instance.LivePageVM = (LivePageVM)LivePage.DataContext;
+            //ConfigPageVM cpVM = (ConfigPageVM)ConfigPage.DataContext;
+            //cpVM.LoadConfig();
+
+            StreamerRepository.Instance.LoadStreamers();
+            StreamerPageVM spVM = (StreamerPageVM)StreamerPage.DataContext;
+            spVM.RefreshStreamers();
         }
 
         private RelayCommand<string> _navigationCommand;
@@ -42,8 +49,6 @@ namespace twitch_notify_v2.ViewModel
 
         private void Navigate(string target)
         {
-            Console.WriteLine("Navigating to target: " + target);
-
             switch (target?.ToLower())
             {
                 case "live":

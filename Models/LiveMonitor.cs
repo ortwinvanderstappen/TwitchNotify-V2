@@ -15,36 +15,37 @@ namespace twitch_notify_v2.Models
 {
     class LiveMonitor
     {
+        private static LiveMonitor _instance = null;
+        private static readonly object padlock = new object();
+        public static LiveMonitor Instance
+        {
+            get
+            {
+                lock (padlock)
+                {
+                    if (_instance == null)
+                    {
+                        _instance = new LiveMonitor();
+                    }
+                    return _instance;
+                }
+            }
+        }
+
         private LiveStreamMonitorService _monitor;
-        private LivePageVM _livePageVM;
+
+        public LivePageVM LivePageVM { get; set; }
+
         private bool _isStarted;
 
-        public LiveMonitor(LivePageVM vm)
+        public LiveMonitor()
         {
-            _livePageVM = vm;
         }
 
         public void StartMonitor()
         {
+            Console.WriteLine("Livemonitor: starting...");
             Task.Run(() => SetupLiveMonitor());
-        }
-
-        public void RefreshStreamerList()
-        {
-            // Set channels
-            List<String> streamerNames = StreamerRepository.Instance.GetStreamerNames();
-
-            // Only set the streamer names if any streamers are listed
-            if (streamerNames.Count > 0)
-            {
-                _monitor.SetChannelsByName(streamerNames);
-
-                // Start the service
-                if (!_isStarted)
-                    _monitor.Start();
-
-                Task.Run(() => _monitor.UpdateLiveStreamersAsync());
-            }
         }
 
         private void SetupLiveMonitor()
@@ -59,6 +60,28 @@ namespace twitch_notify_v2.Models
             _monitor.OnServiceStarted += OnServiceStarted;
 
             RefreshStreamerList();
+        }
+
+        public async void RefreshStreamerList()
+        {
+            // Set channels
+            List<String> streamerNames = StreamerRepository.Instance.GetStreamerNames();
+
+            // Only set the streamer names if any streamers are listed
+            if (streamerNames.Count > 0)
+            {
+                _monitor.SetChannelsByName(streamerNames);
+                var credentialResult = await TwitchAPIConfig.Instance.TwitchAPI.V5.Auth.CheckCredentialsAsync();
+
+                // Start the service
+                if (!_isStarted && credentialResult.Result)
+                {
+                    Console.WriteLine("Livemonitor: Started");
+
+                    _monitor.Start();
+                    await Task.Run(() => _monitor.UpdateLiveStreamersAsync());
+                }
+            }
         }
 
         private async void OnStreamOnlineAsync(object sender, OnStreamOnlineArgs args)
@@ -77,8 +100,7 @@ namespace twitch_notify_v2.Models
                 Console.WriteLine("Streamer " + args.Channel + " is now online: " + streamer.OnlineStatus);
             }
 
-            StreamerRepository.Instance.SaveStreamers();
-            _livePageVM.RefreshStreamers();
+            LivePageVM.RefreshStreamers();
         }
 
         private async void OnStreamOfflineAsync(object sender, OnStreamOfflineArgs args)
@@ -92,11 +114,12 @@ namespace twitch_notify_v2.Models
                 Console.WriteLine("Streamer " + args.Channel + " is now offline: " + streamer.OnlineStatus);
             }
 
-            _livePageVM.RefreshStreamers();
+            LivePageVM.RefreshStreamers();
         }
 
         private void OnServiceStarted(object sender, OnServiceStartedArgs e)
         {
+            Console.WriteLine("Livemonitor: Service started");
             _isStarted = true;
         }
     }
