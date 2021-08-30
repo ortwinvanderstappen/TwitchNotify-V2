@@ -6,7 +6,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:twitch_notify_v2"
         mc:Ignorable="d"
-        Title="Twitch live notifier" MinHeight="650" MinWidth="1000" Height="650" Width="1082.5" Background="#141414">
+        Title="Twitch live notifier" MinHeight="650" MinWidth="1000" Height="650" Width="1082.5" Background="#141414"
+        Closing="OnClose" StateChanged="OnStateChanged" IsVisibleChanged="OnIsVisibleChanged" Icon="twitch_live_notifier_icon.ico">
 
     <!--Datacontext binding-->
     <Window.DataContext>
