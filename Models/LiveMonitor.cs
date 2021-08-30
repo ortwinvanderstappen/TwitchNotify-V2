@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using twitch_notify_v2.Config;
 using twitch_notify_v2.Repositories;
 using twitch_notify_v2.ViewModel;
@@ -98,6 +99,12 @@ namespace twitch_notify_v2.Models
                 streamer.Game = args.Stream.GameName;
 
                 Console.WriteLine("Streamer " + args.Channel + " is now online: " + streamer.OnlineStatus);
+
+                Application.Current.Dispatcher.Invoke((Action)delegate
+                {
+                    NotificationManager.Instance.ShowLivestreamNotification(streamer);
+                });
+
             }
 
             LivePageVM.RefreshStreamers();

@@ -1,0 +1,33 @@
+﻿<Window x:Class="twitch_notify_v2.View.StreamerNotificationPopupWindow"
+        xmlns:vm="clr-namespace:twitch_notify_v2.ViewModel"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:twitch_notify_v2.View"
+        mc:Ignorable="d"
+        Title="StreamerNotificationPopupWindow" Height="144" Width="650" AllowsTransparency="True" WindowStyle="None" Topmost="True" 
+        Background="#141414"
+        Loaded="Window_Loaded" MouseRightButtonDown="WindowRightButtonDown">
+
+    <Window.DataContext>
+        <vm:StreamerNotificationPopupWindowViewModel/>
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+
+        <Image Source="{Binding StreamerIcon, FallbackValue=https://cdn.betterttv.net/emote/58ae8407ff7b7276f8e594f2/3x}"></Image>
+
+        <StackPanel Grid.Column="2" VerticalAlignment="Center" >
+
+            <TextBlock Foreground="White" Text="{Binding StreamerTitle, FallbackValue=Streamer - this is a streamer title test test test}" FontSize="25"  Padding="15px 0px 0px 0px" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Foreground="White" Text="{Binding StreamerGame, FallbackValue=Just Chatting}" FontSize="20"  Padding="15px 0px 0px 0px" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Foreground="White" Text="{Binding StreamerUptime, FallbackValue=00h 00m 00s}" FontSize="19"  Padding="15px 0px 0px 0px" VerticalAlignment="Center"></TextBlock>
+
+        </StackPanel>
+    </Grid>
+</Window>

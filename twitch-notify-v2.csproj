@@ -158,18 +158,23 @@
     <Compile Include="Config\TwitchAPIConfig.cs" />
     <Compile Include="Models\Config.cs" />
     <Compile Include="Models\LiveMonitor.cs" />
+    <Compile Include="Models\NotificationManager.cs" />
     <Compile Include="Models\Streamer.cs" />
     <Compile Include="Models\StreamerManager.cs" />
     <Compile Include="Repositories\StreamerRepository.cs" />
     <Compile Include="ViewModel\ConfigPageVM.cs" />
     <Compile Include="ViewModel\LivePageVM.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\StreamerNotificationPopupWindowViewModel.cs" />
     <Compile Include="ViewModel\StreamerPageVM.cs" />
     <Compile Include="View\ConfigPage.xaml.cs">
       <DependentUpon>ConfigPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\LivePage.xaml.cs">
       <DependentUpon>LivePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\StreamerNotificationPopupWindow.xaml.cs">
+      <DependentUpon>StreamerNotificationPopupWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\StreamerPage.xaml.cs">
       <DependentUpon>StreamerPage.xaml</DependentUpon>
@@ -191,6 +196,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\LivePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\StreamerNotificationPopupWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
